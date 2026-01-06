@@ -73,6 +73,11 @@ release: all
 	mkdir -p $(RDIR)
 	cp build/babaliba.tos $(RDIR)/ba$(RELEASE)en.tos
 	
+	dd if=/dev/zero of=$(RDIR)/babaliba.st bs=1024 count=720
+	mformat -i $(RDIR)/babaliba.st -f 720 :: 
+	mcopy -i $(RDIR)/babaliba.st build/ba$(RELEASE)ca.tos ::
+	mcopy -i $(RDIR)/babaliba.st build/ba$(RELEASE)es.tos ::
+	mcopy -i $(RDIR)/babaliba.st build/ba$(RELEASE)en.tos ::
 
 hdd:
 	rm -rf /tmp/babaliba

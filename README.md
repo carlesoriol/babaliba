@@ -8,7 +8,8 @@ This fan project is non-profit and was created just for fun.
 <br/>
 <br/>
 
-Get it at https://github.com/carlesoriol/babaliba
+Get it at https://github.com/carlesoriol/babaliba 
+Downloads: https://github.com/carlesoriol/babaliba/tree/main/release
 
 6/1/2026 - Version 1.0
 
