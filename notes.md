@@ -21,6 +21,11 @@
 
 ## Fet
 
+###
+
+1.01 - 06/01/2026 - Small bug fixes
+1.00 - 06/01/2026 - First public release
+
 ### Àudio i Música
 - Sons de pantalles de victòria, mort, *tic-tac* de la bomba (càlcul de temps) i explosió.
 - Lògica per alentir la música al final.

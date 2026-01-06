@@ -17,7 +17,7 @@
  */
 
 // #define DEBUG
-const char* const version_string = "1.00";
+const char* const version_string = "1.01";
 
 #include <stdio.h>
 #include <string.h>

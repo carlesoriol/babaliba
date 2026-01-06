@@ -1,4 +1,4 @@
-RELEASE = 100
+RELEASE = 101
 
 PROGRAMC = babaliba testkey testsnd # Update this to match actual .c filenames in src/
 PROGRAMASM = # babacol # Update this to match actual .s filenames in src/
@@ -58,6 +58,7 @@ compress: all
 	upx --best $(OUT)
 
 release: all
+	rm --r -f $(RDIR)/*
 	tools/stcmd m68k-atari-mint-gcc -std=gnu99 -DCATALAN -I m68k-atari-mint/sys-include -I/freemint/libcmini/include -nostdlib   -s -Ofast  /freemint/libcmini/lib/crt0.o  src/babaliba.c -o build/ba$(RELEASE)ca.tos -L/freemint/libcmini/lib -lcmini -lgcc
 	upx --best build/ba$(RELEASE)ca.tos                                                                                             
 	mkdir -p $(RDIR)	
