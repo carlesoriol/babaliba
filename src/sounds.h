@@ -1,0 +1,323 @@
+#ifndef SOUNDS_H
+#define SOUNDS_H
+
+#include "sound.h"
+unsigned char fx_blocked[] = {  
+    
+    SND_MIXER( CHANNEL_A_TONE ),           /* Enable Tone A */   
+    CHANNEL_A_FINE, C1_FINE,              // Scale 8?
+    CHANNEL_A_COARSE, C1_COARSE,            /* Very high pitch */ 
+    VOLUME_A(6),           
+
+    SND_WAIT(1),
+
+    CHANNEL_A_FINE, C2_FINE,
+    CHANNEL_A_COARSE, C2_COARSE,
+    SND_MIXER( CHANNEL_A_TONE ),           /* Enable Tone A */    
+    VOLUME_A(7),           /* Volume: Use Envelope */    
+    
+    //SND_WAIT, 1,    
+    
+    MUTE_A, 
+
+    SND_END
+};
+
+unsigned char fx_walk[] = {  
+    
+    TONE_A(0xe00e),    
+    SND_MIXER( CHANNEL_A_TONE ),           /* Enable Tone A */    
+    VOLUME_A(12),           /* Volume: Use Envelope */    
+    SND_WAIT(1),
+    
+    MUTE_A, 
+    SND_WAIT(1), 
+
+    TONE_A(0x0001),        
+    SND_MIXER( CHANNEL_A_TONE ),           /* Enable Tone A */    
+    VOLUME_A(11),           /* Volume: Use Envelope */    
+    SND_WAIT(2),
+    
+    MUTE_A, 
+    SND_END
+};
+
+
+unsigned char fx_stairs[] = {  
+    
+    TONE_A(0xd00e),    
+    SND_MIXER( CHANNEL_A_TONE ),           /* Enable Tone A */    
+    VOLUME_A(14),           /* Volume: Use Envelope */        
+    SND_WAIT(1),
+    
+    MUTE_A, 
+    SND_WAIT(1), 
+
+    TONE_A(0x0001),    
+    SND_MIXER( CHANNEL_A_TONE ),           /* Enable Tone A */    
+    VOLUME_A(12),           /* Volume: Use Envelope */    
+    SND_WAIT(1),
+    
+    MUTE_A, 
+    SND_END
+};
+
+unsigned char fx_explosion[] = {
+    NOISE_PERIOD(0x1f),           /* Maximum roughness for the noise */
+    SND_MIXER(0xF7),                /* Enable Noise on Channel A only */
+    VOLUME_A(0x10),                 /* Volume: Use Envelope */    
+    ENV_SINGLE_DECAY(0x3000),    /* Shape 0: Single decay then silence */
+    SND_END                         /* End */
+};
+
+unsigned char fx_fall[] = {
+    SND_MIXER( CHANNEL_A_TONE ), // Mixer: Canal A To ON
+    VOLUME_A(VOL_MAX), // Volum A al màxim
+    
+    // El "pu" (descens de to ràpid)
+    TONE_A(0x0400), SND_WAIT(2),        
+    TONE_A(0x03a0), SND_WAIT(2),    
+    TONE_A(0x0350), SND_WAIT(2),    
+    TONE_A(0x0300), SND_WAIT(2),    
+    TONE_A(0x02a0), SND_WAIT(2),    
+    TONE_A(0x0250), SND_WAIT(2),    
+    TONE_A(0x0200), SND_WAIT(2),    
+    TONE_A(0x01a0), SND_WAIT(2),    
+    TONE_A(0x0150), SND_WAIT(2),    
+    TONE_A(0x0100), SND_WAIT(2),    
+    TONE_A(0x00a0), SND_WAIT(2),    
+    TONE_A(0x0050), SND_WAIT(2),    
+    TONE_A(0x0000), SND_WAIT(2),    
+    
+    // El "txup" (transició a soroll ràpida)
+    SND_MIXER( CHANNEL_A_NOISE ), // Mixer: Canal A Soroll ON, To OFF
+    
+    NOISE_PERIOD(0x01), // Soroll agut inicial
+    VOLUME_A(0x10), // Volum per envolupant    
+    ENV_SINGLE_DECAY(0x0800), // Envolupant Low
+    
+    SND_END    
+};
+
+unsigned char fx_lostlife[] = {
+    SND_MIXER( CHANNEL_A_TONE ),
+    VOLUME_A( VOL_MAX ), // Volum màxim
+    
+    // El "Pu" descendent (estil Dinamic)
+    TONE_A(0x0080), SND_WAIT(3),
+    TONE_A(0x0100), SND_WAIT(3),
+    TONE_A(0x0180), SND_WAIT(2),    
+            
+    // El tancament "brut"
+    SND_MIXER( CHANNEL_A_TONE & CHANNEL_A_NOISE ), // Mixer: Canal A Soroll ON, To OFF
+    NOISE_PERIOD(0x0c),
+    USE_ENVELOPE_A,
+    ENV_SINGLE_ATTACK_2(0x1000),
+    SND_END    
+};
+
+unsigned char fx_game_over[] = {
+    SND_MIXER( CHANNEL_A_TONE ),
+    VOLUME_A( VOL_MAX ), // Volum màxim
+    
+    TONE_A(0x0080), SND_WAIT(2),
+    TONE_A(0x0110), SND_WAIT(1),
+    TONE_A(0x0100), SND_WAIT(1),    
+    TONE_A(0x0180), SND_WAIT(1),
+    TONE_A(0x0210), SND_WAIT(1), 
+    TONE_A(0x0200), SND_WAIT(1),
+    TONE_A(0x0280), SND_WAIT(2),
+    TONE_A(0x0310), SND_WAIT(1),    
+    TONE_A(0x0300), SND_WAIT(1),    
+            
+    // El tancament "brut"
+    SND_MIXER( CHANNEL_A_TONE & CHANNEL_A_NOISE ), // Mixer: Canal A Soroll ON, To OFF
+    NOISE_PERIOD(0x0c),
+    USE_ENVELOPE_A,
+    ENV_SINGLE_ATTACK_2(0x1000),
+    SND_END    
+};
+
+unsigned char fx_babaliba_song[] = {
+SND_MIXER( CHANNEL_A_TONE ),
+ SND_WAIT(10), 
+ USE_ENVELOPE_A, 
+ NOTE_A(DS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(E,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(B,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(E,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x8000), SND_WAIT(15), 
+ NOTE_A(DS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(E,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(B,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(E,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(E,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(DS,5), ENV_SINGLE_DECAY(0x8000), SND_WAIT(15), 
+ NOTE_A(B,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(GS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(GS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(GS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(GS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(B,4),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(GS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(B,4),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(GS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(GS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(GS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(B,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(GS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(GS,4), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(B,4),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(CS,6), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(DS,6), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(E,6),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(DS,6), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(CS,6), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(B,4),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(CS,6), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(CS,6), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(DS,6), ENV_SINGLE_DECAY(0x4000), SND_WAIT(6), 
+ NOTE_A(CS,6), ENV_SINGLE_DECAY(0x4000), SND_WAIT(6), 
+ NOTE_A(DS,6), ENV_SINGLE_DECAY(0x4000), SND_WAIT(6), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(6), 
+ NOTE_A(B,4),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(6), 
+ NOTE_A(B,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(6), 
+ NOTE_A(CS,6), ENV_SINGLE_DECAY(0x4000), SND_WAIT(6), 
+ NOTE_A(B,4),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(6), 
+ NOTE_A(B,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(6), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(6), 
+ NOTE_A(GS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(6), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(6), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(7), 
+ NOTE_A(B,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(7), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(7), 
+ NOTE_A(GS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(7), 
+ NOTE_A(G,5),  ENV_SINGLE_DECAY(0x4000), SND_WAIT(7), 
+ NOTE_A(GS,4), ENV_SINGLE_DECAY(0x8000), SND_WAIT(75), 
+
+SND_WAIT(5), 
+VOLUME_A(VOL_MUTE), SND_END
+};
+
+// song short end of game
+
+unsigned char fx_babaliba_song_short[] = {
+ SND_MIXER(CHANNEL_A_TONE),
+ SND_WAIT(10), 
+ USE_ENVELOPE_A, 
+ NOTE_A(DS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5),  
+ NOTE_A(E,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5),  
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(B,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(E,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x8000), SND_WAIT(15), 
+ NOTE_A(DS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(E,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(B,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(AS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(E,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(E,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(DS,5), ENV_SINGLE_DECAY(0x8000), SND_WAIT(15), 
+SND_WAIT(5), 
+VOLUME_A(VOL_MUTE), SND_END
+};
+
+unsigned char fx_got_special[] = {
+ SND_MIXER(CHANNEL_A_TONE),
+ SND_WAIT(10), 
+ USE_ENVELOPE_A, 
+
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(E,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(G,5), ENV_SINGLE_DECAY(0x4000), SND_WAIT(5), 
+ NOTE_A(FS,5), ENV_SINGLE_DECAY(0x8000), SND_WAIT(15), 
+SND_WAIT(5), 
+VOLUME_A(VOL_MUTE), SND_END
+};
+
+unsigned char fx_mute[] = {
+    MUTE_ALL,
+    SND_END
+};
+
+unsigned char fx_bomb_tic[] = {
+    
+    SND_MIXER(CHANNEL_A_TONE),
+    SND_WAIT(1), 
+    USE_ENVELOPE_A, 
+    TONE_A(0x0010), ENV_SINGLE_DECAY(0x200), SND_WAIT(5), 
+    SND_END
+};
+
+unsigned char fx_bomb_tac[] = {
+    
+    SND_MIXER(CHANNEL_A_TONE),
+    SND_WAIT(1), 
+    USE_ENVELOPE_A, 
+    TONE_A(0x0018), ENV_SINGLE_DECAY(0x200), SND_WAIT(5), 
+    SND_END
+};
+
+unsigned char fx_get_item[] = {    
+    TONE_B(0x00ef),    
+    SND_MIXER(CHANNEL_B_TONE),
+    USE_ENVELOPE_B,
+    ENV_SINGLE_DECAY(0x1800),
+    SND_WAIT(2),
+    TONE_B(0x01ef),    
+    SND_WAIT(2),
+    TONE_B(0x00ef),    
+    SND_WAIT(1),
+    TONE_B(0x01ef),    
+    SND_WAIT(1),
+    TONE_B(0x00ef), 
+    SND_WAIT(1),
+    TONE_B(0x01ef),    
+    SND_WAIT(1),
+    TONE_B(0x00ef), 
+    SND_WAIT(30),    
+    SND_END
+};
+
+#endif // SOUNDS_H

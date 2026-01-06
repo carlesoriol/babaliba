@@ -1,0 +1,55 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile (DOCKER)",
+            "type": "shell",
+            "command": "make",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "revealProblems": "onProblem",
+                "panel": "shared",
+                "showReuseMessage": false
+            }
+        },
+        {
+            "label": "Run HATARI",
+            "type": "shell",
+            "command": "hatari",
+            "args": [
+                "-c",
+                "${workspaceFolder}/hatari.conf",
+                "-z",
+                "1.75"
+            ],
+            "dependsOn": "Prepare HDDs for HATARI",
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "close": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Prepare HDDs for HATARI",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "hdd"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "revealProblems": "onProblem",
+                "panel": "shared",
+                "showReuseMessage": false
+            }
+        },
+
+    ]
+}

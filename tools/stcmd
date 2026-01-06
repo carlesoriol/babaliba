@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# modified to work within the Makefile
+# -it changed to -i
+# added path export
+
+export ST_WORKING_FOLDER=$(pwd) 
+
+if [ -z "$VERSION" ]
+then
+    VERSION="latest"
+fi
+if [ -z "$ST_WORKING_FOLDER" ]
+then
+      echo 'ST_WORKING_FOLDER is empty. It should have the absolute path to the source code working folder.'
+      exit 1
+fi
+ARCH=x86_64
+THEDOCKER="logronoide/atarist-toolkit-docker-${ARCH}:${VERSION}"
+THEUSER=$(id -u)
+THEGROUP=$(id -g)
+
+docker run -i --rm  -v ${ST_WORKING_FOLDER}:'/tmp' --user "${THEUSER}:${THEGROUP}" ${THEDOCKER} $@
