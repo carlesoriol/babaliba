@@ -1519,8 +1519,7 @@ __uint8_t startwithgameloaded = false;
                     drawTextBabalibaCentered(STR_RESCUED_PRISONER, 68, COLOR_WHITE, COLOR_LIGHT_CYAN, COLOR_BLACK);
                     items |= ITEM_PRISONER;
                     Dosound( fx_got_special );
-                    VsyncFrames(75);
-                    (void)wait_for_key();                
+                    VsyncFrames(75);                                   
                     drawScreen();
                     mapBlock = empty_block;
                 }       
@@ -1833,8 +1832,7 @@ __uint8_t startwithgameloaded = false;
                 drawTextBabalibaCentered(STR_ALREADY_PRINCESS, 68, COLOR_WHITE, COLOR_LIGHT_CYAN, COLOR_BLACK);                
                 items |= ITEM_PRINCESS;
                 Dosound( fx_got_special );
-                VsyncFrames(75);
-                (void)wait_for_key();
+                VsyncFrames(150);                
                 getrBadGuyPosition();
                 drawScreen();
             }
