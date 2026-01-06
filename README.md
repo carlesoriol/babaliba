@@ -13,7 +13,7 @@ Downloads: https://github.com/carlesoriol/babaliba/tree/main/release
 
 6/1/2026 - Version 1.0
 
-by Carles Oriol - Barcelona 2025
+by Carles Oriol - Barcelona 2026
 carles@enging.com
 
 

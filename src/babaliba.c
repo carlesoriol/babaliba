@@ -1869,7 +1869,7 @@ __uint8_t startwithgameloaded = false;
             drawTextBabalibaCentered(STR_YOU_DID_IT, 52, COLOR_WHITE, COLOR_GREEN, COLOR_BLACK);
             drawTextBabalibaCentered(STR_TIME_USED, 68, COLOR_GREEN, COLOR_WHITE, COLOR_BLACK);
             drawNum(2000-time, 144, 84, COLOR_WHITE, COLOR_BACKGROUND);    
-            drawTextBabalibaCentered(STR_CONTINUE_ICE_CLUB, 100, COLOR_LIGHT_CYAN, COLOR_WHITE, COLOR_BLACK);    
+            drawTextBabalibaCentered(STR_CONTINUE_ICE_GLUB, 100, COLOR_LIGHT_CYAN, COLOR_WHITE, COLOR_BLACK);    
             Dosound( fx_babaliba_song_short );                       
             VsyncFrames(75);
             (void)wait_for_key();   
