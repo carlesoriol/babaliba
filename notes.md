@@ -13,16 +13,13 @@
 - Indicar el pis en el que ens trobem.
 - Indicador de zona (jardí pis, massmorra...) i potser algun efecte visual. (color terra?)
 - *Prefetch* de gràfics a la pantalla d'inici mentre no es prem cap tecla.
-- Minimapa?
-  - Funció `draw_pixel`.
-  - `block_color` al *header*.
-  - Es podria fer que sols es veuen les pantalles visitades
 - Pot ser seria divertit de fer una versió ortigràfica per linux... o per l'st.
 
 ## Fet
 
 ###
 
+1.02 - 07/01/2026 - Mapa (F8)
 1.01 - 06/01/2026 - Small bug fixes
 1.00 - 06/01/2026 - First public release
 
@@ -65,6 +62,10 @@
 ### Altres
 - Entrada i sortida del programa netes sense alterar cap paràmetre del sistema.
 - **Idiomes:** Anglès i català.
+- - Minimapa?
+  - Funció `draw_pixel`.
+  - `block_color` al *header*.
+  - Es podria fer que sols es veuen les pantalles visitades
 
 ## Notes on Atari ST, 68000 and C
 
