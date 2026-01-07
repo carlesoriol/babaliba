@@ -74,11 +74,17 @@ release: all
 	mkdir -p $(RDIR)
 	cp build/babaliba.tos $(RDIR)/ba$(RELEASE)en.tos
 	
+	cp README.md $(RDIR)/
+	pandoc -f markdown -t plain README.md -o $(RDIR)/README.TXT
+	convert ./info/anunci/anunci.png -resize 75% -quality 75 ./release/anunci.jpg
+	convert ./info/caràtules/floppy.png -quality 60 ./release/floppy.jpg
+
 	dd if=/dev/zero of=$(RDIR)/babaliba.st bs=1024 count=720
 	mformat -i $(RDIR)/babaliba.st -f 720 :: 
-	mcopy -i $(RDIR)/babaliba.st build/ba$(RELEASE)ca.tos ::
-	mcopy -i $(RDIR)/babaliba.st build/ba$(RELEASE)es.tos ::
-	mcopy -i $(RDIR)/babaliba.st build/ba$(RELEASE)en.tos ::
+	mcopy -i $(RDIR)/babaliba.st $(BDIR)/ba$(RELEASE)ca.tos ::
+	mcopy -i $(RDIR)/babaliba.st $(BDIR)/ba$(RELEASE)es.tos ::
+	mcopy -i $(RDIR)/babaliba.st $(BDIR)/ba$(RELEASE)en.tos ::
+	mcopy -i $(RDIR)/babaliba.st $(RDIR)/README.TXT ::	
 
 hdd:
 	rm -rf /tmp/babaliba
