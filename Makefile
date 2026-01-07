@@ -60,20 +60,20 @@ compress: all
 release: all
 	rm -r -f $(RDIR)/*
 	rm $(BDIR)/ba*.tos
-	tools/stcmd m68k-atari-mint-gcc -std=gnu99 -DCATALAN -I m68k-atari-mint/sys-include -I/freemint/libcmini/include -nostdlib   -s -Ofast  /freemint/libcmini/lib/crt0.o  src/babaliba.c -o build/ba$(RELEASE)ca.tos -L/freemint/libcmini/lib -lcmini -lgcc
-	upx --best build/ba$(RELEASE)ca.tos                                                                                             
+	tools/stcmd m68k-atari-mint-gcc -std=gnu99 -DCATALAN -I m68k-atari-mint/sys-include -I/freemint/libcmini/include -nostdlib   -s -Ofast  /freemint/libcmini/lib/crt0.o  src/babaliba.c -o $(BDIR)/ba$(RELEASE)ca.tos -L/freemint/libcmini/lib -lcmini -lgcc
+	upx --best $(BDIR)/ba$(RELEASE)ca.tos                                                                                             
 	mkdir -p $(RDIR)	
-	cp build/ba$(RELEASE)ca.tos $(RDIR)/ba$(RELEASE)ca.tos
+	cp $(BDIR)/ba$(RELEASE)ca.tos $(RDIR)/ba$(RELEASE)ca.tos
 
-	tools/stcmd m68k-atari-mint-gcc -std=gnu99 -DSPANISH -I m68k-atari-mint/sys-include -I/freemint/libcmini/include -nostdlib   -s -Ofast  /freemint/libcmini/lib/crt0.o  src/babaliba.c -o build/ba$(RELEASE)es.tos -L/freemint/libcmini/lib -lcmini -lgcc
-	upx --best  build/ba$(RELEASE)es.tos 
+	tools/stcmd m68k-atari-mint-gcc -std=gnu99 -DSPANISH -I m68k-atari-mint/sys-include -I/freemint/libcmini/include -nostdlib   -s -Ofast  /freemint/libcmini/lib/crt0.o  src/babaliba.c -o $(BDIR)/ba$(RELEASE)es.tos -L/freemint/libcmini/lib -lcmini -lgcc
+	upx --best  $(BDIR)/ba$(RELEASE)es.tos 
 	mkdir -p $(RDIR)
-	cp build/ba$(RELEASE)es.tos $(RDIR)/ba$(RELEASE)es.tos
+	cp $(BDIR)/ba$(RELEASE)es.tos $(RDIR)/ba$(RELEASE)es.tos
 	
-	tools/stcmd m68k-atari-mint-gcc -std=gnu99 -DENGLISH -I m68k-atari-mint/sys-include -I/freemint/libcmini/include -nostdlib   -s -Ofast  /freemint/libcmini/lib/crt0.o  src/babaliba.c -o build/ba$(RELEASE)en.tos -L/freemint/libcmini/lib -lcmini -lgcc
-	upx --best  build/ba$(RELEASE)en.tos
+	tools/stcmd m68k-atari-mint-gcc -std=gnu99 -DENGLISH -I m68k-atari-mint/sys-include -I/freemint/libcmini/include -nostdlib   -s -Ofast  /freemint/libcmini/lib/crt0.o  src/babaliba.c -o $(BDIR)/ba$(RELEASE)en.tos -L/freemint/libcmini/lib -lcmini -lgcc
+	upx --best  $(BDIR)/ba$(RELEASE)en.tos
 	mkdir -p $(RDIR)
-	cp build/ba$(RELEASE)en.tos $(RDIR)/ba$(RELEASE)en.tos
+	cp $(BDIR)/ba$(RELEASE)en.tos $(RDIR)/ba$(RELEASE)en.tos
 	
 	cp README.md $(RDIR)/
 	pandoc -f markdown -t plain README.md -o $(RDIR)/README.TXT
@@ -86,6 +86,7 @@ release: all
 	mcopy -i $(RDIR)/babaliba.st $(BDIR)/ba$(RELEASE)es.tos ::
 	mcopy -i $(RDIR)/babaliba.st $(BDIR)/ba$(RELEASE)en.tos ::
 	mcopy -i $(RDIR)/babaliba.st $(RDIR)/README.TXT ::	
+	
 
 hdd:
 	rm -rf /tmp/babaliba
