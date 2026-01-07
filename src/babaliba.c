@@ -1488,7 +1488,8 @@ __uint8_t startwithgameloaded = false;
                     jj.redraw = false;
                 }        
                                 
-                if( mapBlock == block_top_green_door || mapBlock == block_top_magenta_door )
+                if( mapBlock == block_top_green_door || mapBlock == block_top_magenta_door 
+                    || mapBlock == 196 || mapBlock == 195 || mapBlock == 254 || mapBlock == 24 ) // Avoid stairs blocking path
                     mapBlock = empty_block; // allow to pass through door tops
                 
                 // jj moved check new position for items
@@ -1605,8 +1606,8 @@ __uint8_t startwithgameloaded = false;
             mbadguy.step = 3;
             mbadguy.redraw = true;
         }
-
         // check if jj position is in screen
+        
         if (jj.x < 0 || jj.x >= SCREEN_WIDTH || jj.y < 0 || jj.y >= SCREEN_HEIGHT)
         {
             //comprovar escales

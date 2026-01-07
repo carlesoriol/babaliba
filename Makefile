@@ -22,7 +22,7 @@ OUTASM = $(addprefix $(BDIR)/, $(PROGRAMASM:=.tos))
 LIBCMINI = /freemint/libcmini/lib
 CFLAGS = -std=gnu99 -I m68k-atari-mint/sys-include -I/freemint/libcmini/include -nostdlib  
 EXTOBJS = $(LIBCMINI)/crt0.o 
-CFLAGSEXT = -s -Ofast # -O3 Additional CFLAGS can be added here
+CFLAGSEXT = #-s -Ofast # -O3 Additional CFLAGS can be added here
 LINKFLAGS = -L$(LIBCMINI) -lcmini -lgcc 
 
 all: $(OUT) $(OUTASM)
