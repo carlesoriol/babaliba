@@ -88,6 +88,7 @@ Very special keys :-D
 -   Key: F2 - Restore game from slot 2
 -   Key: F3 - Restore game from slot 3
 -   Key: F4 - Restore game from slot 4
+-   Key: F8 - Map (wooooooohooo!!)
 -   Key: F9 - Pokes screen (wooooooohooo!!)
 -   Key: F10 - Pause
 

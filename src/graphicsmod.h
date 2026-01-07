@@ -561,7 +561,8 @@ const struct graphics_modifier graphics_modifiers[] = {
 
 
 
-      
+
 #define N_GRAPHICS_MODIFIERS (sizeof(graphics_modifiers)/sizeof(graphics_modifiers[0]))
-      
+
+
 #endif // GRAPHICSMOD_DATA_H

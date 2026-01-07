@@ -17,7 +17,7 @@
  */
 
 // #define DEBUG
-const char* const version_string = "1.01";
+const char* const version_string = "1.02";
 
 #include <stdio.h>
 #include <string.h>
@@ -50,6 +50,7 @@ const char* const version_string = "1.01";
 #define MOVE_DOWN 3
 #define MOVE_RIGHT 4
 #include "map_special.h"
+#include "blocks_main_color.h"
 #include "sounds.h"
 
 __uint8_t savedResolution;
@@ -197,6 +198,7 @@ long explosionTick = 0; // != 0 if explosion ongoing
 __uint8_t explosionScreenX = 0;
 __uint8_t explosionScreenY = 0;
 
+__uint8_t visitedRooms[SCREENS_WIDTH * SCREENS_HEIGHT];
 
 void VsyncFrames(int frames)
 {
@@ -883,6 +885,7 @@ void initScreen()
     clear_key_buffer();
     drawScreen();
     redrawScreen = false;
+    visitedRooms[current_screen_y * SCREENS_WIDTH + current_screen_x] = 1;
 }
 
 void pantallaInici()
@@ -1029,6 +1032,7 @@ void saveGame(int slot)
         fwrite(&explosionScreenY, sizeof(explosionScreenY), 1, f);                 
         for( int i = 0; i < sizeof(specialLocations)/sizeof(__uint16_t); i++)
             fwrite(&babaliba_map[specialLocations[i]], 1, 1, f);        
+        fwrite(&visitedRooms, sizeof(visitedRooms), 1, f);
         fwrite(&magic, sizeof(magic), 1, f); // end check
         fclose(f);
     }
@@ -1083,6 +1087,7 @@ __uint8_t loadGame(int slot)
         fread(&explosionScreenY, sizeof(explosionScreenY), 1, f);        
         for( int i = 0; i < sizeof(specialLocations)/sizeof(__uint16_t); i++)
             fread(&babaliba_map[specialLocations[i]], 1, 1, f);      
+        fread(&visitedRooms, sizeof(visitedRooms), 1, f);
         fread(&magic, sizeof(magic), 1, f); // start check
         fclose(f);
         if( magic != 0xBABA )
@@ -1128,6 +1133,8 @@ void startGame()
     babaliba_map[item_pos_magenta_door] = item_magenta_door;    
     babaliba_map[item_pos_prisoner] = item_prisoner;
     
+    memset(visitedRooms, 0, sizeof(visitedRooms));
+
     #ifdef DEBUG
     cheats = CHEAT_LIVES | CHEAT_TNTS | CHEAT_TIME | CHEAT_IMMUNITY | CHEAT_NOWALLS;
     #else
@@ -1305,11 +1312,35 @@ __uint8_t startwithgameloaded = false;
                 drawTextBabalibaCentered(STR_PAUSE, 64, COLOR_WHITE, COLOR_DARK_RED, COLOR_BLACK);
                 drawTextBabalibaCentered(STR_PRESS_A_KEY, 80, COLOR_WHITE, COLOR_DARK_YELLOW, COLOR_BLACK);
                 VsyncFrames(50); // wait a bit to avoid immediate unpause
-                clear_key_buffer();
-                while (Bconstat(2) == 0)
-                    Vsync();
-                clear_key_buffer();                
+                wait_for_key();                             
                 drawScreen();
+            }
+
+            if (scan_code == 0x42) // F8 - Pantalla MAPA
+            {
+                clearGameScreen();
+                drawTextBabalibaCentered(STR_MAP, 32+8, COLOR_WHITE, COLOR_DARK_RED, COLOR_BLACK);                                
+
+                __uint8_t incr = 0;
+                for( int y = 0; y < MAP_HEIGHT; y++ )
+                {
+                    incr = rand();
+                    for( int x = 0; x < MAP_WIDTH; x++ )
+                    {
+                        // if visitedRoom
+                        if( visitedRooms[(y / SCREEN_HEIGHT) * SCREENS_WIDTH + (x / SCREEN_WIDTH)] == 0 )
+                        {
+                            incr++;
+                            plot_pixel(x+48+32+8, y+72, (incr%8)==0 ? COLOR_DARK_BLUE : COLOR_BLACK);
+                            x += SCREEN_WIDTH - 1;
+                        }
+                        else
+                            plot_pixel(x+48+32+8, y+72, blocks_main_color[babaliba_map[x + y * MAP_WIDTH]]);;
+                    }
+                }                
+                wait_for_key();
+                drawScreen();
+                clear_key_buffer();                
             }
 
             if (scan_code == 0x43) // F9 - Pantalla POKES

@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide" # to avoid error in header export
+
 import pygame
 import sys
-import os
 import re
 
 from extra_blocks import extra_blocks, block_name
@@ -175,6 +177,19 @@ def build_colorIndexes():
         color_indexes[i] = getMainBlockColor(i)
 
 build_colorIndexes()
+
+if "--exportcolorindexes" in sys.argv:
+    
+    print("#ifndef BLOCKS_MAIN_COLOR_H\n")
+    print("const __uint8_t blocks_main_color[] = {\n\t", end="")
+    for i in range(256):
+        print(f"0x{color_indexes[i]:02X}, ", end="")
+        if i%16 == 15:
+            print(f"\t// from block {i-i%16}\n\t", end="")
+    print("};\n#endif // BLOCKS_MAIN_COLOR_H\n")
+    sys.exit(0)
+
+
 
 def get_image_block(index):
     #now useless

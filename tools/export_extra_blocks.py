@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
+import re
 import sys
-
-
-
-
 
 from extra_blocks import extra_blocks, BLOCK_NAMES, block_name, color_names
 print("""
@@ -63,11 +60,8 @@ for index, extrablock in extra_blocks.items():
 
 print("};\n\n" )
 
-#print(tindex)
+print("""\n\n#define N_GRAPHICS_MODIFIERS (sizeof(graphics_modifiers)/sizeof(graphics_modifiers[0]))""")
+      
 
-print("""
-      
-#define N_GRAPHICS_MODIFIERS (sizeof(graphics_modifiers)/sizeof(graphics_modifiers[0]))
-      
-#endif // GRAPHICSMOD_DATA_H""")
+print("\n\n#endif // GRAPHICSMOD_DATA_H")
 

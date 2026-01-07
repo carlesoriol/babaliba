@@ -1,8 +1,8 @@
-RELEASE = 101
+RELEASE = 102
 
 PROGRAMC = babaliba testkey testsnd # Update this to match actual .c filenames in src/
 PROGRAMASM = # babacol # Update this to match actual .s filenames in src/
-GRAPHICS = src/graphics.h src/font.h src/numbers.h src/graphicsmod.h src/map.h src/marges.h src/loading.h
+GRAPHICS = src/graphics.h src/font.h src/numbers.h src/graphicsmod.h src/map.h src/marges.h src/loading.h src/blocks_main_color.h
 HEADERS = src/lib_graphics.h src/lib_screen.h  src/speccypal.h  src/map_special.h src/lib_screen.h src/speccypal.h src/sounds.h src/sound.h src/strings.h
 VASM_FLAGS = -Felf
 VASM = tools/stcmd vasm
@@ -58,21 +58,22 @@ compress: all
 	upx --best $(OUT)
 
 release: all
-	rm --r -f $(RDIR)/*
+	rm -r -f $(RDIR)/*
+	rm $(BDIR)/ba*.tos
 	tools/stcmd m68k-atari-mint-gcc -std=gnu99 -DCATALAN -I m68k-atari-mint/sys-include -I/freemint/libcmini/include -nostdlib   -s -Ofast  /freemint/libcmini/lib/crt0.o  src/babaliba.c -o build/ba$(RELEASE)ca.tos -L/freemint/libcmini/lib -lcmini -lgcc
 	upx --best build/ba$(RELEASE)ca.tos                                                                                             
 	mkdir -p $(RDIR)	
-	cp build/babaliba.tos $(RDIR)/ba$(RELEASE)ca.tos
+	cp build/ba$(RELEASE)ca.tos $(RDIR)/ba$(RELEASE)ca.tos
 
 	tools/stcmd m68k-atari-mint-gcc -std=gnu99 -DSPANISH -I m68k-atari-mint/sys-include -I/freemint/libcmini/include -nostdlib   -s -Ofast  /freemint/libcmini/lib/crt0.o  src/babaliba.c -o build/ba$(RELEASE)es.tos -L/freemint/libcmini/lib -lcmini -lgcc
 	upx --best  build/ba$(RELEASE)es.tos 
 	mkdir -p $(RDIR)
-	cp build/babaliba.tos $(RDIR)/ba$(RELEASE)es.tos
+	cp build/ba$(RELEASE)es.tos $(RDIR)/ba$(RELEASE)es.tos
 	
 	tools/stcmd m68k-atari-mint-gcc -std=gnu99 -DENGLISH -I m68k-atari-mint/sys-include -I/freemint/libcmini/include -nostdlib   -s -Ofast  /freemint/libcmini/lib/crt0.o  src/babaliba.c -o build/ba$(RELEASE)en.tos -L/freemint/libcmini/lib -lcmini -lgcc
 	upx --best  build/ba$(RELEASE)en.tos
 	mkdir -p $(RDIR)
-	cp build/babaliba.tos $(RDIR)/ba$(RELEASE)en.tos
+	cp build/ba$(RELEASE)en.tos $(RDIR)/ba$(RELEASE)en.tos
 	
 	cp README.md $(RDIR)/
 	pandoc -f markdown -t plain README.md -o $(RDIR)/README.TXT
@@ -124,3 +125,7 @@ src/marges.h: data/marges.ase tools/png2stbaba8w.py
 src/loading.h: data/loading.png tools/png2stbaba.py
 	@rm -rf src/loading.h
 	python3 tools/png2stbaba.py --dataonly --lang c data/loading.png > src/loading.h
+
+src/blocks_main_color.h: src/graphics.h tools/map_creator.py tools/extra_blocks.py
+	@rm -rf src/blocks_main_color.h
+	./tools/map_creator.py --exportcolorindexes > src/blocks_main_color.h	

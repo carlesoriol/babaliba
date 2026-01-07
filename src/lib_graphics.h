@@ -33,6 +33,21 @@ __uint16_t bytecolors[16][4] =
     {0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF}
 };
 
+void plot_pixel(int x, int y, int color) {    
+    __uint8_t *pscr = (__uint8_t*)(videoAddress) + y * 160;
+    pscr += (int)(x / 16)*8;
+    __uint16_t *address = (__uint16_t *)pscr;
+    unsigned short mask = 0x8000 >> (x & 15);
+    
+    if (color & 1) address[0] |= mask; else address[0] &= ~mask;
+    // Plane 1 (bit 1 of color)
+    if (color & 2) address[1] |= mask; else address[1] &= ~mask;
+    // Plane 2 (bit 2 of color)
+    if (color & 4) address[2] |= mask; else address[2] &= ~mask;
+    // Plane 3 (bit 3 of color)
+    if (color & 8) address[3] |= mask; else address[3] &= ~mask;
+}
+
 void drawImageA16( const void *pimage, const int width, const int height, const int x0, const int y0)
 {
     const __uint32_t *image = (__uint32_t*)pimage;
